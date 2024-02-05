@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
-import MovieList from './MovieList'
 
 function ListBox(props) {
-    const { movies } = props
+    const { children } = props
     const [isOpen1, setIsOpen1] = useState(true)
     return (
         <div className='box'>
@@ -13,7 +12,7 @@ function ListBox(props) {
             >
                 {isOpen1 ? '–' : '+'}
             </button>
-            {isOpen1 && <MovieList movies={movies} />}
+            {isOpen1 && children}
         </div>
     )
 }
