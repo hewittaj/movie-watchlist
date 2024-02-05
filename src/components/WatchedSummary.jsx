@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 function WatchedSummary(props) {
     const { watched } = props
 

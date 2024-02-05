@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function Search(props) {
+function Search() {
     const [query, setQuery] = useState('')
 
     return (

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import WatchedMovie from './WatchedMovie'
 
 function WatchedMovieList(props) {

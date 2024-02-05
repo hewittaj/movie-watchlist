@@ -1,8 +1,7 @@
-import { useState } from 'react'
 import ListBox from './ListBox'
 import WatchedBox from './WatchedBox'
 
-function Main(props) {
+function Main() {
     return (
         <main className='main'>
             <ListBox />

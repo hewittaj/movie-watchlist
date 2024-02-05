@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 function WatchedMovie(props) {
     const { movie } = props
     return (
