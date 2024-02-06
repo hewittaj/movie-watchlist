@@ -1,20 +1,20 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 
-function ListBox(props) {
+function Box(props) {
     const { children } = props
-    const [isOpen1, setIsOpen1] = useState(true)
+    const [isOpen, setIsOpen] = useState(true)
     return (
         <div className='box'>
             <button
                 className='btn-toggle'
-                onClick={() => setIsOpen1((open) => !open)}
+                onClick={() => setIsOpen((open) => !open)}
             >
-                {isOpen1 ? '–' : '+'}
+                {isOpen ? '–' : '+'}
             </button>
-            {isOpen1 && children}
+            {isOpen && children}
         </div>
     )
 }
 
-export default ListBox
+export default Box
