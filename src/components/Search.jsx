@@ -1,7 +1,6 @@
-import { useState } from 'react'
-
-function Search() {
-    const [query, setQuery] = useState('')
+/* eslint-disable react/prop-types */
+function Search(props) {
+    const { query, setQuery } = props
 
     return (
         <input

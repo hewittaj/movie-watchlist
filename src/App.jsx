@@ -57,40 +57,53 @@ function App() {
     const [watched, setWatched] = useState(tempWatchedData)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState('')
-    const query = 'interstellar'
+    const [query, setQuery] = useState('')
 
-    useEffect(function () {
-        async function fetchMovies() {
-            try {
-                setIsLoading(true)
-                const res = await fetch(
-                    `http://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=${query}`
-                )
+    const tempQuery = 'interstellar'
 
-                if (!res.ok)
-                    throw new Error(
-                        'Something went wrong with fetching movies.'
+    useEffect(function () {})
+
+    useEffect(
+        function () {
+            async function fetchMovies() {
+                try {
+                    setIsLoading(true)
+                    setError('')
+                    const res = await fetch(
+                        `http://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=${query}`
                     )
 
-                const data = await res.json()
-                if (data.Response === 'False') {
-                    throw new Error('Movie not found.')
+                    if (!res.ok)
+                        throw new Error(
+                            'Something went wrong with fetching movies.'
+                        )
+
+                    const data = await res.json()
+                    if (data.Response === 'False') {
+                        throw new Error('Movie not found.')
+                    }
+                    setMovies(data.Search)
+                } catch (err) {
+                    console.log(err.message)
+                    setError(err.message)
+                } finally {
+                    setIsLoading(false)
                 }
-                setMovies(data.Search)
-            } catch (err) {
-                console.log(err.message)
-                setError(err.message)
-            } finally {
-                setIsLoading(false)
             }
-        }
-        fetchMovies()
-    }, [])
+            if (query.length < 4) {
+                setMovies([])
+                setError('')
+                return
+            }
+            fetchMovies()
+        },
+        [query]
+    )
     return (
         <>
             <NavBar>
                 <Logo />
-                <Search />
+                <Search query={query} setQuery={setQuery} />
                 <NumResults movies={movies} />
             </NavBar>
 
