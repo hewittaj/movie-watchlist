@@ -59,10 +59,6 @@ function App() {
     const [error, setError] = useState('')
     const [query, setQuery] = useState('')
 
-    const tempQuery = 'interstellar'
-
-    useEffect(function () {})
-
     useEffect(
         function () {
             async function fetchMovies() {
@@ -70,7 +66,7 @@ function App() {
                     setIsLoading(true)
                     setError('')
                     const res = await fetch(
-                        `http://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=${query}`
+                        `https://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=${query}`
                     )
 
                     if (!res.ok)
