@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 function Movie(props) {
-    const { movie } = props
+    const { movie, onSelectMovie } = props
     return (
-        <li>
+        <li onClick={() => onSelectMovie(movie.imdbID)}>
             <img src={movie.Poster} alt={`${movie.Title} poster`} />
             <h3>{movie.Title}</h3>
             <div>
