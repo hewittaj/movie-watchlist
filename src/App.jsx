@@ -62,7 +62,6 @@ function App() {
                     setMovies(data.Search)
                     setError('')
                 } catch (err) {
-                    console.log(err.message)
                     if (err.name !== 'AbortError') {
                         setError(err.message)
                     }
@@ -75,8 +74,8 @@ function App() {
                 setError('')
                 return
             }
-
             const timer = setTimeout(fetchMovies, 500)
+            handleCloseMovie()
             return () => clearTimeout(timer)
         },
         [query]

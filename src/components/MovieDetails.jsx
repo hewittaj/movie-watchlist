@@ -41,6 +41,19 @@ function MovieDetails(props) {
         onCloseMovie()
     }
 
+    useEffect(() => {
+        function addEscEventListener(e) {
+            if (e.code === 'Escape') {
+                onCloseMovie()
+            }
+        }
+
+        document.addEventListener('keydown', addEscEventListener)
+
+        return () =>
+            document.removeEventListener('keydown', addEscEventListener)
+    }, [onCloseMovie])
+
     useEffect(
         function () {
             async function getMovieDetails() {
