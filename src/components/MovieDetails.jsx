@@ -52,6 +52,7 @@ function MovieDetails(props) {
                 setMovie(data)
                 setIsLoading(false)
             }
+            getMovieDetails()
         },
         [selectedId]
     )
