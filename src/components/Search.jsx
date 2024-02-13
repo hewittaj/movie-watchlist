@@ -5,8 +5,16 @@ function Search(props) {
     const { query, setQuery } = props
     const inputEl = useRef(null)
     useEffect(() => {
-        inputEl.current.focus()
-    }, [])
+        function callback(e) {
+            if (document.activeElement === inputEl.current) return
+            if (e.code === 'Enter') {
+                inputEl.current.focus()
+                setQuery('')
+            }
+        }
+        document.addEventListener('keydown', callback)
+        return () => document.removeEventListener('keydown', callback)
+    }, [setQuery])
     return (
         <input
             className='search'
