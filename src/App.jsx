@@ -16,7 +16,10 @@ import { useEffect, useState } from 'react'
 const API_KEY = secrets.API_KEY
 function App() {
     const [movies, setMovies] = useState([])
-    const [watched, setWatched] = useState([])
+    const [watched, setWatched] = useState(() => {
+        const storedValue = localStorage.getItem('watched')
+        return JSON.parse(storedValue)
+    })
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState('')
     const [query, setQuery] = useState('')
@@ -39,6 +42,10 @@ function App() {
             prevWatched.filter((movie) => movie.imdbID !== id)
         )
     }
+
+    useEffect(() => {
+        localStorage.setItem('watched', JSON.stringify(watched))
+    }, [watched])
 
     useEffect(
         function () {
