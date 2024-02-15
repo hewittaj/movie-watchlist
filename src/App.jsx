@@ -10,21 +10,17 @@ import NumResults from './components/NumResults'
 import Search from './components/Search'
 import WatchedMovieList from './components/WatchedMovieList'
 import WatchedSummary from './components/WatchedSummary'
-import secrets from './secrets'
 
 import { useEffect, useState } from 'react'
-const API_KEY = secrets.API_KEY
+import useMovies from './useMovies'
 function App() {
-    const [movies, setMovies] = useState([])
-    const [watched, setWatched] = useState([])
-    // const [watched, setWatched] = useState(() => {
-    //     const storedValue = localStorage.getItem('watched')
-    //     return JSON.parse(storedValue)
-    // })
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState('')
+    const [watched, setWatched] = useState(() => {
+        const storedValue = localStorage.getItem('watched')
+        return JSON.parse(storedValue) || []
+    })
     const [query, setQuery] = useState('')
     const [selectedId, setSelectedId] = useState(null)
+    const { movies, isLoading, error } = useMovies(query)
 
     function handleSelectMovie(id) {
         setSelectedId((prevId) => (id === prevId ? null : id))
@@ -43,51 +39,10 @@ function App() {
             prevWatched.filter((movie) => movie.imdbID !== id)
         )
     }
+    useEffect(() => {
+        localStorage.setItem('watched', JSON.stringify(watched))
+    }, [watched])
 
-    // useEffect(() => {
-    //     localStorage.setItem('watched', JSON.stringify(watched))
-    // }, [watched])
-
-    useEffect(
-        function () {
-            async function fetchMovies() {
-                try {
-                    setIsLoading(true)
-                    setError('')
-                    const res = await fetch(
-                        `https://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
-                    )
-
-                    if (!res.ok)
-                        throw new Error(
-                            'Something went wrong with fetching movies.'
-                        )
-
-                    const data = await res.json()
-                    if (data.Response === 'False') {
-                        throw new Error('Movie not found.')
-                    }
-                    setMovies(data.Search)
-                    setError('')
-                } catch (err) {
-                    if (err.name !== 'AbortError') {
-                        setError(err.message)
-                    }
-                } finally {
-                    setIsLoading(false)
-                }
-            }
-            if (query.length < 4) {
-                setMovies([])
-                setError('')
-                return
-            }
-            const timer = setTimeout(fetchMovies, 500)
-            handleCloseMovie()
-            return () => clearTimeout(timer)
-        },
-        [query]
-    )
     return (
         <>
             <NavBar>
