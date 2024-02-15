@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import secrets from '../secrets'
 import StarRating from './StarRating'
 import Loader from './Loader'
+import useKey from '../useKey'
 
 const API_KEY = secrets.API_KEY
 function MovieDetails(props) {
@@ -41,18 +42,7 @@ function MovieDetails(props) {
         onCloseMovie()
     }
 
-    useEffect(() => {
-        function addEscEventListener(e) {
-            if (e.code === 'Escape') {
-                onCloseMovie()
-            }
-        }
-
-        document.addEventListener('keydown', addEscEventListener)
-
-        return () =>
-            document.removeEventListener('keydown', addEscEventListener)
-    }, [onCloseMovie])
+    useKey('Escape', onCloseMovie)
 
     useEffect(
         function () {

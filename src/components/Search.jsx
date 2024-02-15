@@ -1,20 +1,15 @@
 import { useEffect, useRef } from 'react'
+import useKey from '../useKey'
 
 /* eslint-disable react/prop-types */
 function Search(props) {
     const { query, setQuery } = props
     const inputEl = useRef(null)
-    useEffect(() => {
-        function callback(e) {
-            if (document.activeElement === inputEl.current) return
-            if (e.code === 'Enter') {
-                inputEl.current.focus()
-                setQuery('')
-            }
-        }
-        document.addEventListener('keydown', callback)
-        return () => document.removeEventListener('keydown', callback)
-    }, [setQuery])
+    useKey('Enter', () => {
+        if (document.activeElement === inputEl.current) return
+        inputEl.current.focus()
+        setQuery('')
+    })
     return (
         <input
             className='search'

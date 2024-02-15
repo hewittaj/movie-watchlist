@@ -17,8 +17,9 @@ import useLocalStorageState from './useLocalStorageState'
 function App() {
     const [query, setQuery] = useState('')
     const [selectedId, setSelectedId] = useState(null)
-    const { movies, isLoading, error } = useMovies(query)
     const [watched, setWatched] = useLocalStorageState([], 'watched')
+    const { movies, isLoading, error } = useMovies(query)
+
     function handleSelectMovie(id) {
         setSelectedId((prevId) => (id === prevId ? null : id))
     }
